@@ -1,14 +1,34 @@
-
+color[] playerColors = { color(0, 0, 127), color(255, 85, 127), color(255, 170, 0), color(0, 170, 255) };
 
 void mouseClicked(){
-  //if( currPlayer.turnProgress == 3){
-    //loop through all of the tiles
-    //when it finds one that's correct, stop
-      //change tile's house values
-      //change turnProgress
-  //}
+  //make sure the game is set up
+  //make sure they are in the house placing part of the turn
+  if( setNumPlayers && currPlayer.turnProgress == 3){
+    //check every tile
+    for(int i = 0; i< board.length; i++){
+      //make sure it's a property tile
+      //check if they clicked on this tile
+      if(  board[i].tileType.equals("PropertyTile") &&
+           board[i].posOnTile(mouseX, mouseY) ){
+         //pull out the tile
+         PropertyTile tile = (PropertyTile) board[i];
+         //make sure there is space for a house
+         //check if they have the money
+         if( tile.numHouses < 5 &&
+           currPlayer.cash > tile.placeHouseCost){
+           //change tile's house values
+           tile.numHouses++;
+           //subtract the money
+           currPlayer.cash -= tile.placeHouseCost;
+           //change turnProgress
+           currPlayer.turnProgress = 2;
+         }
+      }
+    }
+  }
   println("mouse is at " + mouseX + " " + mouseY);
 }
+
 
 void keyPressed(){
   if( !knowNumPlayers ){
@@ -23,13 +43,29 @@ void keyPressed(){
       case 0:
                 if(key == ' ') currPlayer.rollDie(); break;
       case 1:
-                //if the current player's tile is unowned
-                  //and hit y
-                    //buy the property
-                  //and hit n
-                    //end roll
+                //make sure they are on a property tile
+                Tile blankTile = board[currPlayer.currOnIndex];
+                if( blankTile.tileType.equals("PropertyTile")){
+                  //if the current player's tile is unowned
+                  PropertyTile tile = (PropertyTile) blankTile;
+                  if( !tile.owned ){
+                    //and hit y
+                    if(key == 'y'){
+                      //buy the property
+                      currPlayer.properties.add(tile);
+                    }
+                    else if(key == 'n'){ //hit n
+                      //end roll
+                      currPlayer.turnProgress = 2;
+                    }
+                  }
+                } else {
+                  currPlayer.turnProgress = 3;
+                }
                 break;
-      case 2:
+      //case 2 is buying and placing housese
+      case 3:
+                //if they are 
                 //if b
                   //currPlayer.buyHouse();
                 //if q

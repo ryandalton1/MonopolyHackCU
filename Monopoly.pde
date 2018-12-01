@@ -18,3 +18,7 @@ void draw(){
   rect(100, 100, 20, 20);
   image(background, 10, 10);
 }
+
+int roll(){
+    return int(random(1,13));
+}

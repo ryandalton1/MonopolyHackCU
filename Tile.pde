@@ -2,6 +2,7 @@
 class Tile {
   
   String tileName;
+  String tileType;
   
   ArrayList<Player> whoOn;
   
@@ -46,6 +47,7 @@ class PropertyTile extends Tile {
   
   public PropertyTile(int X, int Y, int Size){
     super(X, Y, Size);
+    tileType = "PropertyTile";
   }
   
   void displayExtras(){
@@ -68,6 +70,7 @@ class JailTile extends Tile {
     super(X, Y, Size);
     indexOfPlayers = new ArrayList<Integer>();
     turnsWaited = new ArrayList<Integer>();
+    tileType = "JailTile";
   }
   
   boolean canLeaveJail(int playerIndex){
@@ -89,6 +92,7 @@ class CardTile extends Tile {
   
   public CardTile(int X, int Y, int Size){
     super(X, Y, Size);
+    tileType = "CardTile";
     
     //initialize cards with some cards plz
   }

@@ -1,12 +1,12 @@
 
 
 void mouseClicked(){
-  if( currPlayer.turnProgress == 3){
+  //if( currPlayer.turnProgress == 3){
     //loop through all of the tiles
     //when it finds one that's correct, stop
       //change tile's house values
       //change turnProgress
-  }
+  //}
   println("mouse is at " + mouseX + " " + mouseY);
 }
 

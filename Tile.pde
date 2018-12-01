@@ -1,3 +1,4 @@
+
 class Tile {
   
   String tileName;
@@ -14,6 +15,7 @@ class Tile {
     x = X;
     y = Y;
     size = 100;
+    tileType = "Type";
     
     whoOn = new ArrayList<Player>();
   }
@@ -31,7 +33,6 @@ class Tile {
 }
 
 class PropertyTile extends Tile {
-  
   boolean owned;
   Player owner;
   //if you want, the bank will pay buy the property from you temporarily
@@ -43,17 +44,19 @@ class PropertyTile extends Tile {
   int placeHouseCost;
   
   //cost of landing on that tile, changes by the number of houses
-  int rent, rent1, rent2, rent3, rent4, rentH;
+  //int rent, rent1, rent2, rent3, rent4, rentH;
+  int[] rent = new int[6];
   
-  public PropertyTile(int X, int Y, int costIn, int houseCostIn, int r1,int r2,int r3, int r4, int r5, int mortgageIn){
+  public PropertyTile(int X, int Y, int costIn, int houseCostIn, int r1,int r2,int r3, int r4, int r5,int r6, int mortgageIn){
     super(X, Y);
     buyCost = costIn;
     placeHouseCost = houseCostIn;
-    rent = r1;
-    rent1 = r2;
-    rent2 = r3;
-    rent3 = r4;
-    rent4 = r5;
+    rent[0] = r1;
+    rent[1] = r2;
+    rent[2] = r3;
+    rent[3] = r4;
+    rent[4] = r5;
+    rent[5] = r6;
     mortgagePrice = mortgageIn;
     tileType = "PropertyTile";
   }
@@ -71,11 +74,13 @@ class JailTile extends Tile {
   
   ArrayList<Integer> indexOfPlayers;
   ArrayList<Integer> turnsWaited;
+  int jailPosition;
   
   final int turnsWait = 3;
   
-  public JailTile(int X, int Y){
+  public JailTile(int X, int Y, int jailPosIn){
     super(X, Y);
+    jailPosition = jailPosIn;
     indexOfPlayers = new ArrayList<Integer>();
     turnsWaited = new ArrayList<Integer>();
     tileType = "JailTile";

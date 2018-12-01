@@ -21,27 +21,26 @@ void setup(){
   currPlayerIndex = 0;
   
   //set up the tiles
-  board[0] = new Tile(138,138,100); //go spot
-  board[1] = new PropertyTile(238,138,100);
-  
-  board[2] = new PropertyTile(338,138,100);
-  board[3] = new PropertyTile(438,138,100);
-  board[4] = new PropertyTile(538,138,100);
-  board[5] = new JailTile(638,138,100); //jail
-  board[6] = new PropertyTile((638,238,100);
-  board[7] = new CardTile((638,338,100); //draw card
-  board[8] = new PropertyTile(638,438,100);
-  board[9] = new PropertyTile(638,538,100);
-  board[10] = new Tile((638,638,100); //free parking
-  board[11] = new PropertyTile(538,638,100);
-  board[12] = new PropertyTile(438,638,100);
-  board[13] = new PropertyTile(338,638,100);
-  board[14] = new PropertyTile(238,638,100);
-  board[15] = new JailTile(138,638,100); //go to jail
-  board[16] = new PropertyTile(138,538,100);
-  board[17] = new CardTile(138,438,100); //draw card
-  board[18] = new PropertyTile(138,338,100);
-  board[19] = new PropertyTile(138,238,100);
+  board[0] = new Tile(138,138); //go spot
+  board[1] = new PropertyTile(238,138,70,50,4,20,60,180,320,450,40);
+  board[2] = new PropertyTile(338,138,70,50,4,20,60,180,320,450,40);
+  board[3] = new PropertyTile(438,138,80,50,6,30,80,200,340,500,60);
+  board[4] = new PropertyTile(538,138,110,50,8,40,100,300,500,650,60);
+  board[5] = new JailTile(638,138,5); //jail
+  board[6] = new PropertyTile(638,238,110,50,8,40,100,300,500,650,60);
+  board[7] = new CardTile(638,338); //draw card
+  board[8] = new PropertyTile(638,438,150,100,14,70,200,550,750,950,90);
+  board[9] = new PropertyTile(638,538,150,100,14,70,200,550,750,950,90);
+  board[10] = new Tile(638,638); //free parking
+  board[11] = new PropertyTile(538,638,200,100,18,90,250,700,875,1050,110);
+  board[12] = new PropertyTile(438,638,200,100,18,90,250,700,875,1050,110);
+  board[13] = new PropertyTile(338,638,210,100,20,100,270,700,890,1070,120);
+  board[14] = new PropertyTile(238,638,270,150,24,120,360,850,1025,1200,140);
+  board[15] = new JailTile(138,638,5); //go to jail
+  board[16] = new PropertyTile(138,538,270,150,24,120,360,850,1025,1200,140);
+  board[17] = new CardTile(138,438); //draw card
+  board[18] = new PropertyTile(138,338,330,150,28,150,450,1000,1200,1400,160);
+  board[19] = new PropertyTile(138,238,330,150,28,150,450,1000,1200,1400,160);
   
   
   //set up the number of players

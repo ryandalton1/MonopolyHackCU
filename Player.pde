@@ -34,6 +34,12 @@ class Player{
   void buyProperty(PropertyTile which){
     //reduce money
     //change the values for which
+    which.owned = true;
+    which.owner = this;
+    which.mortgaged = false;
+    cash -= which.buyCost;
+    which.numHouses = 0;
+    //display a bar on the property showing new ownership TO-DO
   }
   
   void rollDie(){
@@ -55,6 +61,25 @@ class Player{
   }
   
   void analyzeTile(){
+    if(board[locationIndex].tileType.equals("TileTile")){
+      //just a normal tile so don't do anything (free parking, go, regular jail)
+    }
+    else if(board[locationIndex].tileType.equals("PropertyTile")){
+      PropertyTile tile = (PropertyTile) board[locationIndex];
+      if(tile.owned){
+        tile.owner.cash += (tile.rent[tile.numHouses]);
+        cash -= tile.rent[tile.numHouses];
+      }
+      else{
+        
+      }
+    }
+    else if(board[locationIndex].tileType.equals("JailTile")){
+      
+    }
+    else if(board[locationIndex].tileType.equals("CardTile")){
+      
+    }
     //if property
       //if unowned
         //ask if buying

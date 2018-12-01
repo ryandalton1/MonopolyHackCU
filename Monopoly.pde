@@ -1,22 +1,44 @@
 PImage background;
 
-Player person;
+Player[] players;
+boolean knowNumPlayers = false;
+boolean setNumPlayers = false;
 
 void setup(){
-  background = loadImage("boy with apple.jpg");
+  //background size and color
   size(900, 900);
   background(123);
   
-  person = new Player();
+  if(knowNumPlayers){
+    for(int i = 0; i< players.length; i++){
+      players[i] = new Player();
+    }
+    setNumPlayers = true;
+  }
 }
 
 
 void draw(){
-  fill(255, 0, 10);
-  stroke(0);
-  strokeWeight(2);
-  rect(100, 100, 20, 20);
-  image(background, 10, 10);
+  fill(0);
+  
+  //before they've selected the number of players
+  if( !knowNumPlayers ){
+    textSize(50);
+    textAlign(CENTER);
+    text("How many players? 1-4", width/2, 100);
+    textSize(30);
+    text("(Use the keyboard)", width/2, 200);
+  }
+  //after they've selected the number of players
+  else if( !setNumPlayers) {
+    setup();
+   
+  //ready to actually play
+  } else {
+    
+    rect(100, 100, 100, 100);
+  
+  }
 }
 
 int roll(){

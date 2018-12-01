@@ -6,6 +6,7 @@ boolean setNumPlayers = false;
 
 void setup(){
   //background size and color
+  background = loadImage("monopoly board.png");
   size(900, 900);
   background(123);
   
@@ -36,6 +37,7 @@ void draw(){
   //ready to actually play
   } else {
     
+    background(background);
     rect(100, 100, 100, 100);
   
   }

@@ -44,7 +44,7 @@ void keyPressed(){
                 if(key == ' ') currPlayer.rollDie(); break;
       case 1:
                 //make sure they are on a property tile
-                Tile blankTile = board[currPlayer.currOnIndex];
+                Tile blankTile = board[currPlayer.locationIndex];
                 if( blankTile.tileType.equals("PropertyTile")){
                   //if the current player's tile is unowned
                   PropertyTile tile = (PropertyTile) blankTile;
@@ -63,15 +63,21 @@ void keyPressed(){
                   currPlayer.turnProgress = 3;
                 }
                 break;
-      //case 2 is buying and placing housese
-      case 3:
-                //if they are 
-                //if b
-                  //currPlayer.buyHouse();
-                //if q
-                  //change turnProgress to 4
-                  //change the player to the next player
-                  //set the next player's progress to 0
+      case 2:
+                //make sure they have properties
+                if( currPlayer.properties.size() > 0 ){
+                  if( key == 'b' ){
+                    currPlayer.buyHouse();
+                  } else if( key == 'q'){
+                    //increase their progress
+                    currPlayer.turnProgress = 4;
+                    //change the player to the next player
+                    currPlayerIndex = (currPlayerIndex + 1 ) % players.length;
+                    currPlayer = players[currPlayerIndex];
+                    //set the next player's progress to 0
+                    currPlayer.turnProgress = 0;
+                  }
+                }
     }
   
     

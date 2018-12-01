@@ -11,10 +11,10 @@ class Tile {
   //the size
   int size;
   
-  public Tile(int X, int Y, int Size){
+  public Tile(int X, int Y){
     x = X;
     y = Y;
-    size = Size;
+    size = 100;
     
     whoOn = new ArrayList<Player>();
   }
@@ -39,14 +39,23 @@ class PropertyTile extends Tile {
   boolean mortgaged;
   int mortgagePrice;
   
+  int numHouses;
   int buyCost;
   int placeHouseCost;
   
   //cost of landing on that tile, changes by the number of houses
   int rent, rent1, rent2, rent3, rent4, rentH;
   
-  public PropertyTile(int X, int Y, int Size){
-    super(X, Y, Size);
+  public PropertyTile(int X, int Y, int costIn, int houseCostIn, int r1,int r2,int r3, int r4, int r5, int mortgageIn){
+    super(X, Y);
+    buyCost = costIn;
+    placeHouseCost = houseCostIn;
+    rent = r1;
+    rent1 = r2;
+    rent2 = r3;
+    rent3 = r4;
+    rent4 = r5;
+    mortgagePrice = mortgageIn;
     tileType = "PropertyTile";
   }
   
@@ -66,8 +75,8 @@ class JailTile extends Tile {
   
   final int turnsWait = 3;
   
-  public JailTile(int X, int Y, int Size){
-    super(X, Y, Size);
+  public JailTile(int X, int Y){
+    super(X, Y);
     indexOfPlayers = new ArrayList<Integer>();
     turnsWaited = new ArrayList<Integer>();
     tileType = "JailTile";
@@ -90,8 +99,8 @@ class CardTile extends Tile {
   
   ArrayList<Card> cards;
   
-  public CardTile(int X, int Y, int Size){
-    super(X, Y, Size);
+  public CardTile(int X, int Y){
+    super(X, Y);
     tileType = "CardTile";
     
     //initialize cards with some cards plz

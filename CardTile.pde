@@ -6,6 +6,8 @@ class CardTile extends Tile {
     super(X, Y);
     tileType = TileType.CardTile;
     
+    cards = new ArrayList<Card>();
+    
     //initialize cards with some cards plz
     //here is where you shall work
     cards.add(new BothCard("Some wayward warm water whooshes you past go. You spot $200 among the coral. Collect it!",200,0));

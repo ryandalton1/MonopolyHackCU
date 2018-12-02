@@ -74,10 +74,17 @@ void draw(){
     
     background(background);
     
-    //if( currPlayer.doneWithTurn ){
-      currPlayerIndex = (currPlayerIndex + 1) % players.length ;
-      currPlayer = players[currPlayerIndex];
-    //}
+    for(int i = 0; i< players.length; i++){
+      players[i].display(i);
+    }
+    
+    //displaying the stuff to tell the player what to do
+    if( currPlayer.turnProgress == 0){
+      textSize(50);
+      text("Press space to roll a die", width/2, height/2);
+    } else if( currPlayer.turnProgress == 1) {
+      text("Do you want to buy this property? B to buy or Q to quit", width/2, height/2);
+    } 
   
   }
 }

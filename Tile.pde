@@ -1,10 +1,16 @@
+public enum TileType
+{
+  PropertyTile,
+  TileTile,
+  JailTile,
+  CardTile,
+}
+
 
 class Tile {
   
   String tileName;
-  String tileType;
-  
-  ArrayList<Player> whoOn;
+  TileType tileType;
   
   //the position of the top left corner
   int x, y;
@@ -15,9 +21,7 @@ class Tile {
     x = X;
     y = Y;
     size = 100;
-    tileType = "Type";
-    
-    whoOn = new ArrayList<Player>();
+    tileType = TileType.TileTile;
   }
   
   //draws anything onto the tile that's needed
@@ -26,8 +30,7 @@ class Tile {
   }
   
   boolean posOnTile(int X, int Y){
-    //check if that position is on the tile
-    return true;
+    return (X > x && X < x + size) && (Y > y && Y < y + 100);
   }
   
 }
@@ -40,25 +43,35 @@ class PropertyTile extends Tile {
   int mortgagePrice;
   
   int numHouses;
-  int buyCost;
+  public int buyCost;
   int placeHouseCost;
   
   //cost of landing on that tile, changes by the number of houses
   //int rent, rent1, rent2, rent3, rent4, rentH;
   int[] rent = new int[6];
   
-  public PropertyTile(int X, int Y, int costIn, int houseCostIn, int r1,int r2,int r3, int r4, int r5,int r6, int mortgageIn){
+  public PropertyTile(int X, int Y, int costIn, int houseCostIn, int nh,int h1,int h2, int h3, int h4,int hotel, int mortgageIn){ //nhc: cost with no houses, h{n}: cost with n houses, hotel: cost with hotel
     super(X, Y);
     buyCost = costIn;
     placeHouseCost = houseCostIn;
-    rent[0] = r1;
-    rent[1] = r2;
-    rent[2] = r3;
-    rent[3] = r4;
-    rent[4] = r5;
-    rent[5] = r6;
+    rent[0] = nh;
+    rent[1] = h1;
+    rent[2] = h2;
+    rent[3] = h3;
+    rent[4] = h4;
+    rent[5] = hotel;
     mortgagePrice = mortgageIn;
-    tileType = "PropertyTile";
+    tileType = TileType.PropertyTile;
+  }
+  
+  public int RentCost()
+  {
+    return rent[numHouses];
+  }
+  
+  public void addHousingType()
+  {
+    this.numHouses++;
   }
   
   void displayExtras(){
@@ -73,28 +86,29 @@ class PropertyTile extends Tile {
 class JailTile extends Tile {
   
   ArrayList<Integer> indexOfPlayers;
-  ArrayList<Integer> turnsWaited;
+  int[] turnsWaitedForPlayerIndex = new int[4];
   int jailPosition;
   
-  final int turnsWait = 3;
+  final int turnsWait = 2;
   
   public JailTile(int X, int Y, int jailPosIn){
     super(X, Y);
     jailPosition = jailPosIn;
     indexOfPlayers = new ArrayList<Integer>();
-    turnsWaited = new ArrayList<Integer>();
-    tileType = "JailTile";
+    tileType = TileType.JailTile;
   }
   
-  boolean canLeaveJail(int playerIndex){
-    //find them
-    //if turns waited is big enough
-    //remove them from the wait list if they've waited long enough
-    return false;
+  public void incTurnsWaited(int playerIndex)
+  {
+    turnsWaitedForPlayerIndex[playerIndex]++;
+  }
+  
+  public boolean canLeaveJail(int playerIndex){
+    return turnsWaitedForPlayerIndex[playerIndex] >= turnsWait;
   }
   
   void landInJail(int playerIndex){
-    //add them to the list
+    turnsWaitedForPlayerIndex[playerIndex] = 0;
   }
   
 }

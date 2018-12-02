@@ -39,6 +39,7 @@ class Player{
     which.mortgaged = false;
     cash -= which.buyCost;
     which.numHouses = 0;
+    properties.add(which);
     //display a bar on the property showing new ownership TO-DO
   }
   
@@ -61,23 +62,27 @@ class Player{
   }
   
   void analyzeTile(){
-    if(board[locationIndex].tileType.equals("TileTile")){
+    if(board[locationIndex].tileType == TileType.TileTile){
       //just a normal tile so don't do anything (free parking, go, regular jail)
     }
-    else if(board[locationIndex].tileType.equals("PropertyTile")){
+    else if(board[locationIndex].tileType == TileType.PropertyTile){
       PropertyTile tile = (PropertyTile) board[locationIndex];
       if(tile.owned){
-        tile.owner.cash += (tile.rent[tile.numHouses]);
-        cash -= tile.rent[tile.numHouses];
+        tile.owner.cash += tile.RentCost();
+        cash -= tile.RentCost();
       }
       else{
         
       }
     }
-    else if(board[locationIndex].tileType.equals("JailTile")){
+    else if(board[locationIndex].tileType == TileType.JailTile){
       
     }
-    else if(board[locationIndex].tileType.equals("CardTile")){
+    else if(board[locationIndex].tileType == TileType.CardTile){
+      
+    }
+    else if(board[locationIndex].tileType == TileType.JailTile)
+    {
       
     }
     //if property

@@ -29,3 +29,13 @@ class MoveCard extends Card {
   }
   
 }
+class BothCard extends Card {
+  int moneyChange;
+  int moveTo;
+  public BothCard(String desc, int money, int moveloc){
+    super(desc);
+    moveTo = moveLoc;
+    moneyChange = money;
+  }
+
+}

@@ -42,9 +42,9 @@ class CardTile extends Tile {
   
   Card drawCard(){
     //randomly picks a card
-    //removes it
-    //returns it
-    return cards.get(0);
+    int loc = (int) random(cards.size());
+    //removes it and returns it
+    return cards.remove(loc);
   }
   
 }

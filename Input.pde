@@ -1,5 +1,3 @@
-color[] playerColors = { color(0, 0, 127), color(255, 85, 127), color(255, 170, 0), color(0, 170, 255) };
-
 void mouseClicked(){
   //make sure the game is set up
   //make sure they are in the house placing part of the turn
@@ -21,7 +19,12 @@ void mouseClicked(){
            //subtract the money
            currPlayer.cash -= tile.placeHouseCost;
            //change turnProgress
-           currPlayer.turnProgress = 2;
+           //check if they should just end their turn now
+           if( currPlayer.hasOpenProperties() ){
+             currPlayer.turnProgress = 2;
+           } else {
+             currPlayer.endTurn();
+           }
          }
       }
     }
@@ -38,6 +41,7 @@ void keyPressed(){
       case '2': numPlayers = 2; break;
       case '3': numPlayers = 3; break;
       case '4': numPlayers = 4; break;
+      default: numPlayers = 4; break;
     }
     players = new Player[numPlayers];
     println("There are " + players.length + " players.");
@@ -46,7 +50,7 @@ void keyPressed(){
   } else if( setNumPlayers) {
     switch(currPlayer.turnProgress){
       case 0:
-                if(currPlayer.IsInJail())
+                if(currPlayer.IsInJail()) //don't let them do anything if in jail
                 {
                   currPlayer.IncJailTime();
                   //increase their progress
@@ -55,7 +59,7 @@ void keyPressed(){
                   currPlayerIndex = (currPlayerIndex + 1 ) % players.length;
                   currPlayer = players[currPlayerIndex];
                   //set the next player's progress to 0
-                  currPlayer.turnProgress = 0; 
+                  currPlayer.turnProgress = 0;
                 }
                 else if(key == ' ') 
                   currPlayer.rollDie(); 
@@ -71,19 +75,31 @@ void keyPressed(){
                     if(key == 'y'){
                       //buy the property
                       currPlayer.properties.add(tile);
+                      tile.owned = true;
+                      tile.owner = currPlayer;
+                      currPlayer.turnProgress = 2;
                     }
                     else if(key == 'n'){ //hit n
                       //end roll
-                      currPlayer.turnProgress = 2;
+                      if(currPlayer.properties.size() > 0){
+                        currPlayer.turnProgress = 2;
+                      } else {
+                        currPlayer.endTurn();
+                      }
                     }
                   }
                 } else {
-                  currPlayer.turnProgress = 3;
+                  //check if they should just end their turn now
+                  if( currPlayer.hasOpenProperties() ){
+                    currPlayer.turnProgress = 2;
+                  } else {
+                    currPlayer.endTurn();
+                  }
                 }
                 break;
       case 2:
                 //make sure they have properties
-                if( currPlayer.properties.size() > 0 ){
+                if( currPlayer.hasOpenProperties() ){
                   if( key == 'b' ){
                     currPlayer.buyHouse();
                   } else if( key == 'q'){
@@ -95,6 +111,8 @@ void keyPressed(){
                     //set the next player's progress to 0
                     currPlayer.turnProgress = 0;
                   }
+                } else {
+                  currPlayer.endTurn();
                 }
     }
   

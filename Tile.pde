@@ -20,13 +20,16 @@ class Tile {
   public Tile(int X, int Y){
     x = X;
     y = Y;
-    size = 100;
+    size = 105;
     tileType = TileType.TileTile;
   }
   
   //draws anything onto the tile that's needed
   void displayExtras(){
-    rect(x, y, size, size);
+    stroke(255);
+    noFill();
+    strokeWeight(1);
+    //rect(x, y, size, size);
   }
   
   boolean posOnTile(int X, int Y){
@@ -76,8 +79,22 @@ class PropertyTile extends Tile {
   
   void displayExtras(){
     super.displayExtras();
-    //draw the bar to show ownership
-    //draw the fish and shark
+    if( owner != null){
+      //draw the bar to show ownership
+      fill(playerColors[owner.playerIndex]);
+      stroke(255);
+      strokeWeight(2);
+      rect(x, y+size-10, size, 10);
+      //draw the fish and shark
+      if( numHouses == 5){
+        //draw the shark
+      } else {
+        for(int i = 0; i< numHouses; i++){
+          //draw the fish
+          image(houseShapes[owner.playerIndex], x + i*20, y+size-50);
+        }
+      }
+    }
   }
   
 }

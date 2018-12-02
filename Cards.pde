@@ -1,6 +1,14 @@
+enum CardType {
+  MoneyCard,
+  MoveCard,
+  BothCard
+}
+
 abstract class Card {
   
   String description;
+  
+  CardType type;
   
   public Card(String desc){
     description = desc;
@@ -15,6 +23,7 @@ class MoneyCard extends Card {
   public MoneyCard(String desc, int money){
     super(desc);
     moneyChange = money;
+    type = CardType.MoneyCard;
   }
   
 }
@@ -26,6 +35,7 @@ class MoveCard extends Card {
   public MoveCard(String desc, int moveLoc){
     super(desc);
     moveTo = moveLoc;
+    type = CardType.MoveCard;
   }
   
 }
@@ -36,6 +46,7 @@ class BothCard extends Card {
     super(desc);
     moveTo = moveLoc;
     moneyChange = money;
+    type = CardType.BothCard;
   }
 
 }

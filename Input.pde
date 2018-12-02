@@ -8,7 +8,7 @@ void mouseClicked(){
     for(int i = 0; i< board.length; i++){
       //make sure it's a property tile
       //check if they clicked on this tile
-      if(  board[i].tileType.equals("PropertyTile") &&
+      if(  board[i].tileType == TileType.PropertyTile &&
            board[i].posOnTile(mouseX, mouseY) ){
          //pull out the tile
          PropertyTile tile = (PropertyTile) board[i];
@@ -45,7 +45,7 @@ void keyPressed(){
       case 1:
                 //make sure they are on a property tile
                 Tile blankTile = board[currPlayer.locationIndex];
-                if( blankTile.tileType.equals("PropertyTile")){
+                if( blankTile.tileType == TileType.PropertyTile){
                   //if the current player's tile is unowned
                   PropertyTile tile = (PropertyTile) blankTile;
                   if( !tile.owned ){

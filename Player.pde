@@ -20,7 +20,9 @@ class Player{
   //4 means it should move to the next player
   int turnProgress;
   
-  public Player(){
+  PImage sprite;
+  
+  public Player(String spriteFile){
     cash = 1500;
     locationIndex = 0;
     
@@ -28,7 +30,7 @@ class Player{
     
     turnProgress = 0;
     
-    currOnIndex = 0;
+    sprite = loadImage(spriteFile);
   }
   
   void buyProperty(PropertyTile which){

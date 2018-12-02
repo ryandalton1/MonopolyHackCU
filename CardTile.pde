@@ -4,7 +4,7 @@ class CardTile extends Tile {
   
   public CardTile(int X, int Y){
     super(X, Y);
-    tileType = "CardTile";
+    tileType = TileType.CardTile;
     
     //initialize cards with some cards plz
     //here is where you shall work

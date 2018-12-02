@@ -32,7 +32,7 @@ class MoveCard extends Card {
 class BothCard extends Card {
   int moneyChange;
   int moveTo;
-  public BothCard(String desc, int money, int moveloc){
+  public BothCard(String desc, int money, int moveLoc){
     super(desc);
     moveTo = moveLoc;
     moneyChange = money;

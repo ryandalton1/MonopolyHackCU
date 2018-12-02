@@ -57,6 +57,7 @@ class Player{
   
   void display(){
     //display the player at the tile's postions
+    image(sprite, board[locationIndex].x, board[locationIndex].y);
   }
   
   boolean canKeepPlaying(){

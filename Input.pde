@@ -32,16 +32,34 @@ void mouseClicked(){
 
 void keyPressed(){
   if( !knowNumPlayers ){
+    int numPlayers = 0;
     switch(key){
-      case '1': players = new Player[1]; knowNumPlayers = true; break;
-      case '2': players = new Player[2]; knowNumPlayers = true; break;
-      case '3': players = new Player[3]; knowNumPlayers = true; break;
-      case '4': players = new Player[4]; knowNumPlayers = true; break;
+      case '1': numPlayers = 1; break;
+      case '2': numPlayers = 2; break;
+      case '3': numPlayers = 3; break;
+      case '4': numPlayers = 4; break;
     }
+    players = new Player[numPlayers];
+    println("There are " + players.length + " players.");
+    knowNumPlayers = true;
+    
   } else if( setNumPlayers) {
     switch(currPlayer.turnProgress){
       case 0:
-                if(key == ' ') currPlayer.rollDie(); break;
+                if(currPlayer.IsInJail())
+                {
+                  currPlayer.IncJailTime();
+                  //increase their progress
+                  currPlayer.turnProgress = 4;
+                  //change the player to the next player
+                  currPlayerIndex = (currPlayerIndex + 1 ) % players.length;
+                  currPlayer = players[currPlayerIndex];
+                  //set the next player's progress to 0
+                  currPlayer.turnProgress = 0; 
+                }
+                else if(key == ' ') 
+                  currPlayer.rollDie(); 
+                break;
       case 1:
                 //make sure they are on a property tile
                 Tile blankTile = board[currPlayer.locationIndex];

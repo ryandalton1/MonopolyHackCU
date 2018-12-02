@@ -47,6 +47,7 @@ void setup(){
   if(knowNumPlayers){
     for(int i = 0; i< players.length; i++){
       players[i] = new Player("player" + (i+1) + ".png");
+      players[i].playerIndex = i;
     }
     setNumPlayers = true;
     currPlayer = players[currPlayerIndex];

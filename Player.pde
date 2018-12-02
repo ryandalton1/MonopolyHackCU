@@ -4,6 +4,7 @@ class Player{
   int cash;
   
   String name;
+  public int playerIndex;
   
   //where they are
   int locationIndex;
@@ -84,10 +85,6 @@ class Player{
     else if(board[locationIndex].tileType == TileType.CardTile){
       
     }
-    else if(board[locationIndex].tileType == TileType.JailTile)
-    {
-      
-    }
     //if property
       //if unowned
         //ask if buying
@@ -108,6 +105,30 @@ class Player{
   
   void applyCard(Card which){
     //figure this out
+  }
+  
+  public boolean IsInJail()
+  {
+    if(board[locationIndex].tileType == TileType.JailTile)
+    {
+      JailTile jt = (JailTile)board[locationIndex];
+      return jt.canLeaveJail(playerIndex);
+    }
+    return false;
+  }
+  
+  public void IncJailTime()
+  {
+    if(board[locationIndex].tileType == TileType.JailTile)
+    {
+      JailTile jt = (JailTile)board[locationIndex];
+      jt.incTurnsWaited(playerIndex);
+    }
+  }
+  
+  public void SetPlayerIndex(int index)
+  {
+    playerIndex = index;
   }
   
 }

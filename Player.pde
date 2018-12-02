@@ -56,9 +56,9 @@ class Player{
     analyzeTile();
   }
   
-  void display(){
+  void display(int which){
     //display the player at the tile's postions
-    image(sprite, board[locationIndex].x, board[locationIndex].y);
+    image(sprite, board[locationIndex].x+ which* 20 + 5, board[locationIndex].y + 20, 35, 35);
   }
   
   boolean canKeepPlaying(){

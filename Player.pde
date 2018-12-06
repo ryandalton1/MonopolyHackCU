@@ -8,6 +8,8 @@ class Player{
   
   //where they are
   int locationIndex;
+  //where they want to be
+  int destinationIndex;
   
   ArrayList<PropertyTile> properties;
   
@@ -26,6 +28,7 @@ class Player{
   public Player(String spriteFile){
     cash = 1500;
     locationIndex = 0;
+    destinationIndex = 0;
     
     properties = new ArrayList<PropertyTile>();
     
@@ -47,13 +50,15 @@ class Player{
   }
   
   void rollDie(){
-    int roll = (int) (random(6) + 1);
-    locationIndex += roll;
-    locationIndex %= NUM_TILES;
-    
-    turnProgress = 1;
-    
-    analyzeTile();
+    //roll the die
+    int roll = (int) (random(4) + 1);
+    //set where they want to go
+    destinationIndex += roll;
+    destinationIndex %= NUM_TILES;
+  }
+  
+  boolean movingPiece(){
+    return destinationIndex > locationIndex;
   }
   
   void display(int which){
@@ -68,10 +73,10 @@ class Player{
     int y = 100;
     boolean vert = false;
     switch(which){
-      case 0: x = 240; y=60; vert = false; break;
-      case 1: x = 774; y = 260; vert = true; break;
-      case 2: x = 240; y = 780; vert = false; break;
-      case 3: x = 65; y = 260; vert = true; break;
+      case 0: x = width/2 - 200; y = 63; vert = false; break;
+      case 1: x = width - 63 - 60; y = height/2 - 200; vert = true; break;
+      case 2: x = width/2 - 200; y = width - 63 - 60; vert = false; break;
+      case 3: x = 63; y = height/2 - 200; vert = true; break;
       case 4: break;
     }
     noFill();
@@ -82,7 +87,28 @@ class Player{
     pushMatrix();
     translate(x, y);
     if(vert){ rotate(HALF_PI); translate(0, -60);}
+    
     rect(0, 0, 400, 60);
+    textSize(15);
+    fill(0);
+    textAlign(LEFT);
+    text("Cash: " + cash + "$", 10, 5, 140, 20);
+    text("Located at: " + locationIndex, 10, 25, 110, 20);
+    //the properties
+    String owned = "";
+    if(properties.size() > 0 ){
+      for(int i = 0; i < properties.size() -1 ; i++){
+        owned += "(" + properties.get(i).numHouses + ") ";
+      }
+      if( properties.size() != 1){
+        owned += "and ";
+      }
+      owned += "(" + properties.get(properties.size()-1).numHouses + ")";
+    }
+    text("Properties Owned:", 150, 5, 300, 20);
+    text(owned, 150, 25, 300, 20);
+    
+    //end the transform
     popMatrix();
   }
   
@@ -93,14 +119,22 @@ class Player{
   void analyzeTile(){
     if(board[locationIndex].tileType == TileType.TileTile){
       //just a normal tile so don't do anything (free parking, go, regular jail)
-      turnProgress = 2;
+      if( properties.size() > 0){
+        turnProgress = 2;
+      } else {
+        endTurn();
+      }
     }
     else if(board[locationIndex].tileType == TileType.PropertyTile){
       PropertyTile tile = (PropertyTile) board[locationIndex];
       if(tile.owned){
         tile.owner.cash += tile.RentCost();
         cash -= tile.RentCost();
-        turnProgress = 2;
+        if( properties.size() > 0){
+          turnProgress = 2;
+        } else {
+          endTurn();
+        }
       }
     }
     else if(board[locationIndex].tileType == TileType.JailTile){
@@ -108,19 +142,9 @@ class Player{
       endTurn();
     }
     else if(board[locationIndex].tileType == TileType.CardTile){
-      Card drawn = ( (CardTile) board[locationIndex]).drawCard();
-      println(drawn.description);
-      if(drawn.type == CardType.MoneyCard){
-        cash += ((MoneyCard) drawn).moneyChange;
-      }
-      if(drawn.type == CardType.MoveCard){
-        locationIndex = ((MoveCard) drawn).moveTo;
-      }
-      if(drawn.type == CardType.BothCard){
-        cash += ((BothCard) drawn).moneyChange;
-        locationIndex = ((BothCard) drawn).moveTo;
-      }
-      endTurn();
+      lastCard = ( (CardTile) board[locationIndex]).drawCard();
+      applyCard(lastCard);
+      turnProgress = 4;
     }
   }
   
@@ -135,13 +159,25 @@ class Player{
   
   void buyHouse(){
     //change player's money
-    cash -= ((PropertyTile)board[1]).placeHouseCost;
+    cash -= ((PropertyTile)board[locationIndex]).placeHouseCost;
     //change the progress
     turnProgress = 3;
   }
   
   void applyCard(Card which){
-    //figure this out
+    //println(which.description);
+    if(which.type == CardType.MoneyCard){
+      cash += ((MoneyCard) which).moneyChange;
+    }
+    if(which.type == CardType.MoveCard){
+      locationIndex = ((MoveCard) which).moveTo;
+      destinationIndex = locationIndex;
+    }
+    if(which.type == CardType.BothCard){
+      cash += ((BothCard) which).moneyChange;
+      locationIndex = ((BothCard) which).moveTo;
+      destinationIndex = locationIndex;
+    }
   }
   
   public boolean IsInJail()

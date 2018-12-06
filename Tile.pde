@@ -86,14 +86,14 @@ class PropertyTile extends Tile {
       strokeWeight(2);
       rect(x, y+size-10, size, 10);
       //draw the fish and shark
-      if( numHouses == 5){
+      //if( numHouses == 5){
         //draw the shark
-      } else {
+      //} else {
         for(int i = 0; i< numHouses; i++){
           //draw the fish
           image(houseShapes[owner.playerIndex], x + i*20, y+size-50);
         }
-      }
+      //}
     }
   }
   
@@ -126,6 +126,7 @@ class JailTile extends Tile {
   
   void landInJail(int playerIndex){
     turnsWaitedForPlayerIndex[playerIndex] = 0;
+    players[playerIndex].locationIndex = jailPosition;
   }
   
 }

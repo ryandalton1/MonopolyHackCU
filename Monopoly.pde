@@ -56,9 +56,9 @@ void setup(){
   ((CardTile)board[17]).addCards();
   
   //to bypass the player asking
-println("Remember to remove this");
-  players = new Player[4];
-  knowNumPlayers = true;
+//println("Remember to remove this");
+//  players = new Player[4];
+//  knowNumPlayers = true;
   
   //set up the number of players
   if(knowNumPlayers){

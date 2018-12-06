@@ -7,9 +7,20 @@ class CardTile extends Tile {
     tileType = TileType.CardTile;
     
     cards = new ArrayList<Card>();
-    
-    //initialize cards with some cards plz
-    //here is where you shall work
+  }
+  
+  Card drawCard(){
+    //make sure there are cards
+    if( cards.size() <= 0 ){
+      addCards();
+    }
+    //randomly picks a card
+    int loc = (int) random(cards.size());
+    //removes it and returns it
+    return cards.remove(loc);
+  }
+  
+  void addCards(){
     cards.add(new BothCard("Some wayward warm water whooshes you past go. You spot $200 among the coral. Collect it!",200,0));
     cards.add(new BothCard("Some wayward warm water whooshes you past go. You spot $200 among the coral. Collect it!",200,0));
     cards.add(new MoneyCard("Oil spill cleanup causes economic growth! Collect $50 from the bank.",50));
@@ -28,8 +39,8 @@ class CardTile extends Tile {
     cards.add(new MoneyCard("Millenials are destroying the fish market. Pay $100.",-100));
     cards.add(new MoveCard("No fish round these parts! Go to location 6",6));
     cards.add(new MoveCard("I'm dead inside! Go to 10",10));
-    cards.add(new MoveCard("Boat's nearly out of gas. Head over to 15 to grab more.",15));
-    cards.add(new MoveCard("How's the wallet looking? Pay 20 a visit.",20));
+    cards.add(new MoveCard("Boat's nearly out of gas. Head over to 14 to grab more.", 14));
+    cards.add(new MoveCard("How's the wallet looking? Head over to start.", 0));
     cards.add(new MoveCard("You've been naughty naughty ;) . Go to jail.", 5));
     cards.add(new MoveCard("Harbors are expensive. Head on over to free parking!", 10));
     cards.add(new MoveCard("You've heard fishing's good at 11. Check it out.",11));
@@ -37,14 +48,6 @@ class CardTile extends Tile {
     cards.add(new BothCard("You surf a wave of money to 8",5000,8));
     cards.add(new MoveCard("You get big fisherman gains and accidentally row all the way to 19.",19));
     cards.add(new MoveCard("The sirens call you to 2. You can't resist.",2));
-
-  }
-  
-  Card drawCard(){
-    //randomly picks a card
-    int loc = (int) random(cards.size());
-    //removes it and returns it
-    return cards.remove(loc);
   }
   
 }

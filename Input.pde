@@ -7,6 +7,7 @@ void mouseClicked(){
       //make sure it's a property tile
       //check if they clicked on this tile
       if(  board[i].tileType == TileType.PropertyTile &&
+           ((PropertyTile) board[i]).owner == currPlayer &&
            board[i].posOnTile(mouseX, mouseY) ){
          //pull out the tile
          PropertyTile tile = (PropertyTile) board[i];
@@ -29,7 +30,6 @@ void mouseClicked(){
       }
     }
   }
-  println("mouse is at " + mouseX + " " + mouseY);
 }
 
 
@@ -41,12 +41,12 @@ void keyPressed(){
       case '2': numPlayers = 2; break;
       case '3': numPlayers = 3; break;
       case '4': numPlayers = 4; break;
-      default: numPlayers = 4; break;
     }
-    players = new Player[numPlayers];
-    println("There are " + players.length + " players.");
-    knowNumPlayers = true;
-    
+    if( numPlayers != 0 ){
+      players = new Player[numPlayers];
+      println("There are " + players.length + " players.");
+      knowNumPlayers = true;
+    }
   } else if( setNumPlayers) {
     switch(currPlayer.turnProgress){
       case 0:
@@ -61,7 +61,7 @@ void keyPressed(){
                   //set the next player's progress to 0
                   currPlayer.turnProgress = 0;
                 }
-                else if(key == ' ') 
+                else if(key == ' ' && !currPlayer.movingPiece()) 
                   currPlayer.rollDie(); 
                 break;
       case 1:
@@ -114,6 +114,11 @@ void keyPressed(){
                 } else {
                   currPlayer.endTurn();
                 }
+                break;
+      case 4:
+                //any key is pressed to continue
+                currPlayer.endTurn();
+                break;
     }
   
     
